@@ -10,5 +10,3 @@ Deno.test("Rechne Dauer aus", () => {
   const tage = calcDateOnDiet(80, 85, 1.8, 25, Sex.Male);
   assertEquals(tage, 7);
 });
-
-

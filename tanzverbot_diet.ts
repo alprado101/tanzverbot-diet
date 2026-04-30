@@ -30,6 +30,7 @@ export function calcDateOnDiet(
   sex: Sex,
 ): number {
   const weightGainKg = targetWeightKg - currentWeightKg;
+  const averageWeightKg = (currentWeightKg + targetWeightKg) / 2;
   if (weightGainKg < 0) {
     throw new Error(`This diet is for gaining weight, not loosing it!`);
   }
@@ -48,7 +49,7 @@ export function calcDateOnDiet(
     dailyCaloriesBasicMetabolicRate = Math.ceil(
       // Harris-Benedict-Formula (Male)
       66.47 +
-        13.7 * currentWeightKg +
+        13.7 * averageWeightKg +
         5.003 * heightM * meterToCm -
         6.75 * ageY,
     );
@@ -56,7 +57,7 @@ export function calcDateOnDiet(
     dailyCaloriesBasicMetabolicRate = Math.ceil(
       // Harris-Benedict-Formula (Female)
       655.1 +
-        9.563 * currentWeightKg +
+        9.563 * averageWeightKg +
         1.85 * heightM * meterToCm -
         4.676 * ageY,
     );
