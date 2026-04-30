@@ -43,23 +43,29 @@ export function calcDateOnDiet(
   }
   let dailyCaloriesBasicMetabolicRate = 0;
   // TODO: Die Formel für Kalorien in eine eigene Funktion auslagern
+  const meterToCm = 100.0;
   if (sex == Sex.Male) {
     dailyCaloriesBasicMetabolicRate = Math.ceil(
       // Harris-Benedict-Formula (Male)
-      // TODO: Zahlen wie 66.47 Namen geben (Konstanten)
-      66.47 + 13.7 * currentWeightKg + 5.003 * heightM * 100.0 - 6.75 * ageY,
+      66.47 +
+        13.7 * currentWeightKg +
+        5.003 * heightM * meterToCm -
+        6.75 * ageY,
     );
   } else {
     dailyCaloriesBasicMetabolicRate = Math.ceil(
       // Harris-Benedict-Formula (Female)
-      655.1 + 9.563 * currentWeightKg + 1.85 * heightM * 100.0 - 4.676 * ageY,
+      655.1 +
+        9.563 * currentWeightKg +
+        1.85 * heightM * meterToCm -
+        4.676 * ageY,
     );
   }
   const dailyExcessCalories =
     dailyCaloriesOnDiet - dailyCaloriesBasicMetabolicRate;
+  const KcalPerKgFat = 9000;
   if (dailyExcessCalories <= 0) {
     throw new Error("This diet is not sufficient for you to gain weight.");
   }
-  // TODO: Die Zahl 9000 als Konstante speichern
-  return Math.ceil((9000 * weightGainKg) / dailyExcessCalories);
+  return Math.ceil((KcalPerKgFat * weightGainKg) / dailyExcessCalories);
 }
